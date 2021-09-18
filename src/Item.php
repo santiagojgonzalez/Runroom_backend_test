@@ -9,6 +9,12 @@ class Item
     const BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT = 'Backstage passes to a TAFKAL80ETC concert';
     const SULFURAS_HAND_OF_RAGNAROS = 'Sulfuras, Hand of Ragnaros';
 
+    const QUALITY_0 = 0;
+    const QUALITY_6 = 6;
+    const QUALITY_11 = 11;
+    const QUALITY_50 = 50;
+
+
     public string $name;
     public int $sell_in;
     public int $quality;
