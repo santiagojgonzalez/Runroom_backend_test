@@ -73,7 +73,7 @@ class Item
     /**
      * Reduce Quality in 1
      */
-    public function reduceQuality()
+    public function reduceQuality(): void
     {
         --$this->quality;
     }
@@ -82,7 +82,7 @@ class Item
     /**
      * Boost Quality in 1
      */
-    public function boostQuality()
+    public function boostQuality(): void
     {
         ++$this->quality;
     }
@@ -90,7 +90,7 @@ class Item
     /**
      * Reduce SellIn in 1
      */
-    public function reduceSellIn()
+    public function reduceSellIn(): void
     {
         --$this->sell_in;
     }
