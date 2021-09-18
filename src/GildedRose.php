@@ -49,16 +49,16 @@ class GildedRose
     {
         if ($item->getQuality() < Item::QUALITY_50) {
             $item->boostQuality();
-            if ($item->getSellIn() < Item::QUALITY_11 & $item->getQuality() < Item::QUALITY_50) {
+            if ($item->getSellIn() < Item::SELLIN_11) {
                 $item->boostQuality();
             }
-            if ($item->getSellIn() < Item::QUALITY_6 && $item->getQuality() < Item::QUALITY_50) {
+            if ($item->getSellIn() < Item::SELLIN_6) {
                 $item->boostQuality();
             }
         }
 
         $item->reduceSellIn();
-        if ($item->getSellIn() < Item::QUALITY_0) {
+        if ($item->getSellIn() < Item::SELLIN_0) {
             $item->setQuality(Item::QUALITY_0);
         }
     }
@@ -74,7 +74,7 @@ class GildedRose
         }
         $item->reduceSellIn();
 
-        if ($item->getSellIn() < Item::QUALITY_0 && $item->getQuality() < Item::QUALITY_50) {
+        if ($item->getSellIn() < Item::SELLIN_0 && $item->getQuality() < Item::QUALITY_50) {
             $item->boostQuality();
         }
 
@@ -91,7 +91,7 @@ class GildedRose
         }
         $item->reduceSellIn();
 
-        if ($item->getSellIn() < Item::QUALITY_0 && $item->getQuality() > Item::QUALITY_0) {
+        if ($item->getSellIn() < Item::SELLIN_0 && $item->getQuality() > Item::QUALITY_0) {
             $item->reduceQuality();
         }
     }

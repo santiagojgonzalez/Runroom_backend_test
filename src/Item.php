@@ -9,9 +9,11 @@ class Item
     const BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT = 'Backstage passes to a TAFKAL80ETC concert';
     const SULFURAS_HAND_OF_RAGNAROS = 'Sulfuras, Hand of Ragnaros';
 
+    const SELLIN_0 = 0;
+    const SELLIN_6 = 6;
+    const SELLIN_11 = 11;
+
     const QUALITY_0 = 0;
-    const QUALITY_6 = 6;
-    const QUALITY_11 = 11;
     const QUALITY_50 = 50;
 
 
@@ -71,7 +73,7 @@ class Item
     /**
      * Reduce Quality in 1
      */
-    public function reduceQuality()
+    public function reduceQuality(): void
     {
         --$this->quality;
     }
@@ -80,7 +82,7 @@ class Item
     /**
      * Boost Quality in 1
      */
-    public function boostQuality()
+    public function boostQuality(): void
     {
         ++$this->quality;
     }
@@ -88,7 +90,7 @@ class Item
     /**
      * Reduce SellIn in 1
      */
-    public function reduceSellIn()
+    public function reduceSellIn(): void
     {
         --$this->sell_in;
     }
