@@ -5,56 +5,94 @@ namespace Runroom\GildedRose;
 class GildedRose
 {
 
-    private $items;
+    private array $items;
 
-    function __construct($items)
+    function __construct(array $items)
     {
         $this->items = $items;
     }
 
-    function update_quality()
+    public function update_quality(): void
     {
         /**
          * @var Item $item
          */
         foreach ($this->items as $item) {
-            if ($item->getName() != Item::AGED_BRIE && $item->getName() != Item::BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT) {
-                if ($item->getQuality() > 0 && $item->getName() != Item::SULFURAS_HAND_OF_RAGNAROS) {
-                    $item->reduceQuality();
-                }
-            } else {
-                if ($item->getQuality() < 50) {
-                    $item->boostQuality();
-                    if ($item->getName() == Item::BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT) {
-                        if ($item->getSellIn() < 11 & $item->getQuality() < 50) {
-                            $item->boostQuality();
-                        }
-                        if ($item->getSellIn() < 6 && $item->getQuality() < 50) {
-                            $item->boostQuality();
-                        }
-                    }
-                }
-            }
 
-            if ($item->getName() != Item::SULFURAS_HAND_OF_RAGNAROS) {
-                $item->reduceSellIn();
-            }
+            switch ($item->getName()) {
 
-            if ($item->getSellIn() < 0) {
-                if ($item->getName() != Item::AGED_BRIE) {
-                    if ($item->getName() != Item::BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT) {
-                        if ($item->getQuality() > 0 && $item->getName() != Item::SULFURAS_HAND_OF_RAGNAROS) {
-                                $item->reduceQuality();
-                            }
-                    } else {
-                        $item->setQuality(0);
-                    }
-                } else {
-                    if ($item->getQuality() < 50) {
-                        $item->boostQuality();
-                    }
-                }
+                case Item::BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT:
+                    $this->updateQualityBackstage($item);
+                    break;
+
+                case Item::AGED_BRIE:
+                    $this->updateQualityAgedBrie($item);
+                    break;
+
+                case Item::SULFURAS_HAND_OF_RAGNAROS;
+                    break;
+
+                default:
+                    $this->updateQualityDefault($item);
+                    break;
+
             }
+        }
+    }
+
+
+    /**
+     * Item::BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT
+     * @param Item $item
+     */
+    private function updateQualityBackstage(Item $item): void
+    {
+        if ($item->getQuality() < Item::QUALITY_50) {
+            $item->boostQuality();
+            if ($item->getSellIn() < Item::QUALITY_11 & $item->getQuality() < Item::QUALITY_50) {
+                $item->boostQuality();
+            }
+            if ($item->getSellIn() < Item::QUALITY_6 && $item->getQuality() < Item::QUALITY_50) {
+                $item->boostQuality();
+            }
+        }
+
+        $item->reduceSellIn();
+        if ($item->getSellIn() < Item::QUALITY_0) {
+            $item->setQuality(Item::QUALITY_0);
+        }
+    }
+
+    /**
+     * Item::AGED_BRIE
+     * @param Item $item
+     */
+    private function updateQualityAgedBrie(Item $item): void
+    {
+        if ($item->getQuality() < Item::QUALITY_50) {
+            $item->boostQuality();
+        }
+        $item->reduceSellIn();
+
+        if ($item->getSellIn() < Item::QUALITY_0 && $item->getQuality() < Item::QUALITY_50) {
+            $item->boostQuality();
+        }
+
+    }
+
+    /**
+     * Item Default
+     * @param Item $item
+     */
+    private function updateQualityDefault(Item $item): void
+    {
+        if ($item->getQuality() > Item::QUALITY_0) {
+            $item->reduceQuality();
+        }
+        $item->reduceSellIn();
+
+        if ($item->getSellIn() < Item::QUALITY_0 && $item->getQuality() > Item::QUALITY_0) {
+            $item->reduceQuality();
         }
     }
 }
